@@ -1,0 +1,13 @@
+alembic
+fastapi
+loguru
+lxml
+oracledb
+passlib[bcrypt]
+python-dotenv
+python-jose[cryptography]
+# multipart dependency from fastapi
+python-multipart
+requests
+SQLAlchemy>=2.0.0
+uvicorn[standard]
