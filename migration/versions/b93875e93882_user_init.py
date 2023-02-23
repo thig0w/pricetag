@@ -13,7 +13,8 @@ import sqlalchemy as sa
 from alembic import op
 from dotenv import load_dotenv
 from sqlalchemy.dialects import oracle
-from src.PriceTag.api.user.business import get_password_hash
+
+from src.pricetag.api.user.business import get_password_hash
 
 load_dotenv()
 
