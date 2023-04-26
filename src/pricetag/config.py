@@ -59,7 +59,7 @@ class DevAPISettings(BaseAPISettings):
     debug: bool = True
     logger_level: str = os.getenv("LOGGER_LEVEL", "TRACE")
     # 0 defalts to 10 seconds
-    ACCESS_TOKEN_EXPIRE_MINUTES = 0
+    ACCESS_TOKEN_EXPIRE_MINUTES = 50
 
 
 class TestAPISettings(BaseAPISettings):

@@ -35,11 +35,17 @@ def create_app():
     def redirect_to_docs() -> RedirectResponse:
         return RedirectResponse("/docs")
 
-    logger.debug("Adding Auth routes to FastAPI app")
+    logger.debug("Adding User routes to FastAPI app")
     from src.pricetag.api import user
 
     app.include_router(user.endpoints.router, prefix=config.api_v1_route)
     app.openapi_tags += user.endpoints.tags_metadata
+
+    logger.debug("Adding Product routes to FastAPI app")
+    from src.pricetag.api import product
+
+    app.include_router(product.endpoints.router, prefix=config.api_v1_route)
+    app.openapi_tags += product.endpoints.tags_metadata
 
     logger.success("FastAPI app created!")
     return app
