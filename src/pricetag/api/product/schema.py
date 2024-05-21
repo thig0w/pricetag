@@ -18,7 +18,7 @@ class Product(ProductCreate):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ProductHistCreateBase(BaseModel):
@@ -34,4 +34,4 @@ class ProductHist(ProductHistCreate):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

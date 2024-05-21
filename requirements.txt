@@ -1,13 +1,17 @@
 alembic
+APScheduler==4.0.0a5
+#TODO: Remove passlib usage: https://github.com/pyca/bcrypt/issues/684
+bcrypt==4.0.1
 fastapi
 loguru
 lxml
-oracledb
 passlib[bcrypt]
+psycopg2-binary
+pydantic-settings
 python-dotenv
 python-jose[cryptography]
 # multipart dependency from fastapi
 python-multipart
 requests
-SQLAlchemy>=2.0.0
+SQLAlchemy
 uvicorn[standard]

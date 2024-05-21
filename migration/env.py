@@ -24,9 +24,8 @@ if config.config_file_name is not None:
 # with the path given in the config of the main code
 config.set_main_option(
     "sqlalchemy.url",
-    f'oracle+oracledb://{os.environ.get("DB_USERNAME")}:{os.environ.get("DB_PASSWORD")}@',
+    os.environ.get("DATABASE_URL"),
 )
-
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
@@ -74,7 +73,7 @@ def run_migrations_online() -> None:
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
-        connect_args={"dsn": os.environ.get("DB_CONNECTSTRING")},
+        # connect_args={"dsn": os.environ.get("DB_CONNECTSTRING")},
     )
 
     with connectable.connect() as connection:

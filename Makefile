@@ -10,7 +10,7 @@ $(VENV)/bin/activate: requirements.txt
 	$(PIP) install -r requirements.txt
 
 run: $(VENV)/bin/activate
-	$(PYTHON) main.py
+	uvicorn "src.main:app" --reload --port 8000
 
 cleancache:
 	find . -name "__pycache__" -exec rm -rf {} +

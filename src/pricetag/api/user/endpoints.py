@@ -48,7 +48,7 @@ async def login_for_access_token(
 async def create_user(
     user: schema.UserCreate,
     db: Session = Depends(get_db),
-    current_user: schema.User = Depends(business.get_current_user),
+    # current_user: schema.User = Depends(business.get_current_user),
 ):
     db_user = await business.get_user_by_email(db, email=user.email)
     if db_user:

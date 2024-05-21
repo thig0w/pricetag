@@ -7,7 +7,7 @@ from functools import lru_cache
 from dotenv import load_dotenv
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 load_dotenv()
 
@@ -21,7 +21,7 @@ class BaseAPISettings(BaseSettings):
     logger_level: str = "ERROR"
 
     # For the default, python-oracledb Thin mode that doesn't use Oracle Instant Client
-    thick_mode: dict = None
+    thick_mode: dict | None = None
 
     # To use python-oracledb Thick mode on macOS (Intel x86).
     # thick_mode = {"lib_dir": os.environ.get("HOME")+"/Downloads/instantclient_19_8"}
@@ -36,21 +36,23 @@ class BaseAPISettings(BaseSettings):
 
     DB_USERNAME: str = os.environ.get("DB_USERNAME")
     DB_PASSWORD: str = os.environ.get("DB_PASSWORD")
-    DB_CONNECT_ARGS: dict = (
+    DB_CONNECT_ARGS: dict | None = (
         {"dsn": os.environ.get("DB_CONNECTSTRING")}
         if os.environ.get("DB_CONNECTSTRING") is not None
         else None
     )
 
-    DATABASE_URL = os.getenv(
+    DATABASE_URL: str = os.getenv(
         "DATABASE_URL", f"oracle+oracledb://{DB_USERNAME}:{DB_PASSWORD}@"
     )
 
-    SECRET_KEY = os.getenv("SECRET_KEY") or secrets.token_urlsafe()
-    ALGORITHM = "HS256"
+    SECRET_KEY: str = os.getenv("SECRET_KEY") or secrets.token_urlsafe()
+    ALGORITHM: str = "HS256"
 
-    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-    oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/users/token")
+    pwd_context: CryptContext = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    oauth2_scheme: OAuth2PasswordBearer = OAuth2PasswordBearer(
+        tokenUrl="/api/v1/users/token"
+    )
 
 
 class DevAPISettings(BaseAPISettings):
@@ -59,7 +61,7 @@ class DevAPISettings(BaseAPISettings):
     debug: bool = True
     logger_level: str = os.getenv("LOGGER_LEVEL", "TRACE")
     # 0 defalts to 10 seconds
-    ACCESS_TOKEN_EXPIRE_MINUTES = 50
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 50
 
 
 class TestAPISettings(BaseAPISettings):
@@ -67,7 +69,7 @@ class TestAPISettings(BaseAPISettings):
 
     debug: bool = True
     logger_level: str = os.getenv("LOGGER_LEVEL", "DEBUG")
-    ACCESS_TOKEN_EXPIRE_MINUTES = 10
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 10
 
 
 class ProdAPISettings(BaseAPISettings):
@@ -75,7 +77,7 @@ class ProdAPISettings(BaseAPISettings):
 
     debug: bool = False
     logger_level: str = os.getenv("LOGGER_LEVEL", "ERROR")
-    ACCESS_TOKEN_EXPIRE_MINUTES = 60
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
 
 ENV_CONFIG_DICT = dict(

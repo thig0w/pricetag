@@ -13,7 +13,7 @@ from .config import get_config
 load_dotenv()
 config = get_config(os.getenv("ENV"))
 
-logger.remove(0)
+# logger.remove(0)
 logger.add(sys.stderr, level=config.logger_level)
 logger.info(f"Starting API for {config.project_name} with {config.__doc__}")
 
