@@ -6,8 +6,9 @@ from functools import lru_cache
 
 from dotenv import load_dotenv
 from fastapi.security import OAuth2PasswordBearer
-from passlib.context import CryptContext
 from pydantic_settings import BaseSettings
+
+from src.pricetag.models.security import CryptContext
 
 load_dotenv()
 
@@ -49,7 +50,7 @@ class BaseAPISettings(BaseSettings):
     SECRET_KEY: str = os.getenv("SECRET_KEY") or secrets.token_urlsafe()
     ALGORITHM: str = "HS256"
 
-    pwd_context: CryptContext = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    pwd_context: CryptContext = CryptContext()
     oauth2_scheme: OAuth2PasswordBearer = OAuth2PasswordBearer(
         tokenUrl="/api/v1/users/token"
     )

@@ -37,11 +37,11 @@ async def create_user(db: Session, user: UserCreate) -> models.User:
 
 
 async def verify_password(plain_password, hashed_password):
-    return config.pwd_context.verify(plain_password, hashed_password)
+    return config.pwd_context.verify_password(plain_password, hashed_password)
 
 
 async def get_password_hash(password):
-    return config.pwd_context.hash(password)
+    return config.pwd_context.hash_password(password)
 
 
 async def authenticate_user(username: str, password: str, db: Session):
