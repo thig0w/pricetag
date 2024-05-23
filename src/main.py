@@ -41,7 +41,7 @@ def execute():
 
 scheduler = Scheduler()
 scheduler.add_schedule(execute, IntervalTrigger(minutes=1))
-scheduler.start_in_background()
+# scheduler.start_in_background()
 ##------------ end remove
 
 app = create_app()

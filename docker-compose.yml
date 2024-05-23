@@ -9,9 +9,10 @@ services:
 #    volumes:
 #      - .
     environment:
+#TODO: Fix this
       - DB_USERNAME=fix
       - DB_PASSWORD=This
-      - DATABASE_URL=postgresql://fix:This@dockerfun
+      - DATABASE_URL=postgresql://fix:This@db/dockerfun
       - ENV=development
       - LOGGER_LEVEL=DEBUG
     ports:

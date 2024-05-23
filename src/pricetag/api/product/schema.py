@@ -2,7 +2,7 @@
 """Parsers and serializers for /product API endpoints."""
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ProductCreate(BaseModel):
@@ -15,10 +15,8 @@ class ProductCreate(BaseModel):
 
 
 class Product(ProductCreate):
+    model_config = ConfigDict(from_attributes=True)
     id: int
-
-    class Config:
-        from_attributes = True
 
 
 class ProductHistCreateBase(BaseModel):
@@ -31,7 +29,5 @@ class ProductHistCreate(ProductHistCreateBase):
 
 
 class ProductHist(ProductHistCreate):
+    model_config = ConfigDict(from_attributes=True)
     id: int
-
-    class Config:
-        from_attributes = True

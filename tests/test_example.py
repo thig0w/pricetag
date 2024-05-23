@@ -68,12 +68,12 @@ def test_check_users_me_auth(client, token):
 
 
 def test_check_users_param_auth(client, token):
-    response = client.get("http://127.0.0.1:8000/api/v1/users/admin")
+    response = client.get(f"http://127.0.0.1:8000/api/v1/users/{admin_name}/")
     assert response.status_code == 401
     assert response.json() == {"detail": "Not authenticated"}
 
     response = client.get(
-        "http://127.0.0.1:8000/api/v1/users/admin",
+        f"http://127.0.0.1:8000/api/v1/users/{admin_name}/",
         headers={
             "accept": "application/json",
             "Authorization": f"Bearer {token}",
@@ -88,7 +88,7 @@ def test_auth_expired_token(client, token):
     sleep(15)
 
     response = client.get(
-        "http://127.0.0.1:8000/api/v1/users/admin/",
+        f"http://127.0.0.1:8000/api/v1/users/{admin_name}/",
         headers={
             "accept": "application/json",
             "Authorization": f"Bearer {token}",

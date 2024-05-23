@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Parsers and serializers for /auth API endpoints."""
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class UserBase(BaseModel):
@@ -13,7 +13,5 @@ class UserCreate(UserBase):
 
 
 class User(UserBase):
+    model_config = ConfigDict(from_attributes=True)
     disabled: bool
-
-    class Config:
-        from_attributes = True
