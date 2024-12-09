@@ -18,9 +18,6 @@ engine = create_engine(
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# TODO: Remove this when alembic is ready
-# Base.metadata.create_all(bind=engine)
-
 
 def get_db():
     try:

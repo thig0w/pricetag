@@ -81,9 +81,7 @@ class ProdAPISettings(BaseAPISettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
 
-ENV_CONFIG_DICT = dict(
-    development=DevAPISettings, testing=TestAPISettings, production=ProdAPISettings
-)
+ENV_CONFIG_DICT = dict(dev=DevAPISettings, test=TestAPISettings, prod=ProdAPISettings)
 
 
 @lru_cache()

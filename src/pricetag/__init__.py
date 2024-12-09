@@ -47,5 +47,11 @@ def create_app():
     app.include_router(product.endpoints.router, prefix=config.api_v1_route)
     app.openapi_tags += product.endpoints.tags_metadata
 
+    logger.debug("Adding Exec routes to FastAPI app")
+    from src.pricetag.api import exec
+
+    app.include_router(exec.endpoints.router, prefix=config.api_v1_route)
+    app.openapi_tags += exec.endpoints.tags_metadata
+
     logger.success("FastAPI app created!")
     return app

@@ -13,8 +13,9 @@ services:
       - DB_USERNAME=fix
       - DB_PASSWORD=This
       - DATABASE_URL=postgresql://fix:This@db/dockerfun
-      - ENV=development
+      - ENV=test
       - LOGGER_LEVEL=DEBUG
+      - SCHEDULER_MIN=60
     ports:
       - "8000:8000"
 
@@ -28,6 +29,11 @@ services:
       - POSTGRES_DB=dockerfun
     ports:
       - "5432:5432"
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
 
 volumes:
   postgres_data:

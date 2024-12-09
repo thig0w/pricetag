@@ -4,7 +4,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from src.pricetag.api.user.business import get_current_user
+from src.pricetag.api.user.business import get_current_user, get_user
 from src.pricetag.api.user.schema import User
 from src.pricetag.db.session import get_db
 
@@ -29,7 +29,7 @@ async def create_product(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    db_user = await business.get_user(db, username=product.username)
+    db_user = await get_user(db, username=product.username)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return await business.create_product(db=db, product=product)
@@ -49,11 +49,55 @@ async def read_user_products(
 
 
 @router.get("/{product_id}", response_model=schema.Product, tags=["product"])
-async def read_product_info(
+async def read_product_info_id(
     product_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
+    db_product = await business.get_product(db, product_id=product_id)
+    if db_product is None:
+        raise HTTPException(status_code=404, detail="Product id Not Found")
+    return db_product
+
+
+# TODO: create role - just admin should trigger execute all
+@router.get("/execute", response_model=schema.Product, tags=["product"])
+async def send_exec_product(
+    product_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # TODO: Implement
+    db_product = await business.get_product(db, product_id=product_id)
+    if db_product is None:
+        raise HTTPException(status_code=404, detail="Product id Not Found")
+    return db_product
+
+
+@router.get("/execute/{user}", response_model=schema.Product, tags=["product"])
+async def send_exec_product_user(
+    product_id: int,
+    user: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # TODO: Implement
+    db_product = await business.get_product(db, product_id=product_id)
+    if db_product is None:
+        raise HTTPException(status_code=404, detail="Product id Not Found")
+    return db_product
+
+
+@router.get(
+    "/execute/{user}/{product_id}", response_model=schema.Product, tags=["product"]
+)
+async def send_exec_product_user_id(
+    product_id: int,
+    user: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # TODO: Implement
     db_product = await business.get_product(db, product_id=product_id)
     if db_product is None:
         raise HTTPException(status_code=404, detail="Product id Not Found")
