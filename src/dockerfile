@@ -1,14 +1,23 @@
-FROM python:3.11
+#TODO: Plan to change to alpine
+FROM python:3.11-slim-bullseye
 LABEL authors="Thiago.Weidman"
+
+RUN apt-get update \
+  #&& apt-get install -y build-essential \
+  && apt-get upgrade -y \
+  # cleaning up unused files
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
 
-COPY src/main.py requirements.txt /src/
+COPY src/main.py requirements.txt src/celery_worker.py /src/
 
 ADD src/pricetag /src/pricetag
 
+RUN pip3 install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 WORKDIR /
 
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+EXPOSE 8000
